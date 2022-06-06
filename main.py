@@ -23,7 +23,7 @@ st.markdown(hide_menu_style, unsafe_allow_html = True)
 # Initialize path - later change to AWS directory
 # file_path = '/Volumes/Stark 1TB/MTSU_DSI/DataManagementDemo/'
 
-image = Image.open('DSI.jpg')
+image = Image.open('DSI.jpeg')
 st.image(image, width = 500)
 
 
