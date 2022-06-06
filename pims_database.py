@@ -6,9 +6,9 @@ import pandas as pd
 ### SETTING UP THE DATABASE LOGIN
 def return_engine():
     # build engine url
-    user = 'dear_app'
-    pwd = 'TqZhvTe7894HBvOZ86HL'
-    host = 'prod-dear.cluster-caa4px8fgr8w.us-east-1.rds.amazonaws.com'
+    user = st.secrets["username"]
+    pwd = st.secrets["password"]
+    host = st.secrets["host"]
     engine_url = f"postgresql+psycopg2://{user}:{pwd}@{host}/dear_database"
     # creates the sql alchemy engine to query a database
     return create_engine(engine_url)
