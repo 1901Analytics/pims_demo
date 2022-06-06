@@ -20,9 +20,19 @@ hide_menu_style = """
     """
 st.markdown(hide_menu_style, unsafe_allow_html = True)
 
+# Initialize path - later change to AWS directory
+# file_path = '/Volumes/Stark 1TB/MTSU_DSI/DataManagementDemo/'
+
+image = Image.open('DSI.jpg')
+st.image(image, width = 500)
+
+
+
+# creates the sql alchemy engine to query a database
+engine = return_engine()
 
 # Data Entry, Analysis, and Retrieval
-st.title('Data Entry Analysis and Retrieval (DEAR) Platform')
+st.title('Data Entry Analysis and Retrieval (DEAR) Platform: PIMS Demo')
 
 # Initialize first Session State for Role
 if 'user_role' not in st.session_state:
