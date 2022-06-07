@@ -37,8 +37,8 @@ pims_prevalence = Table('pims_prevalence', meta,
 pims_activities = Table('pims_activities', meta,
                   Column('number_screened_for_sud', Integer),
                   Column('issues_reporting_above_data_sud', String),
-                  Column('aiyp_creating_subcommittees', Boolean),
-                  Column('aiyp_overdose_reversal_reporting', Boolean))
+                  Column('aiyp_creating_subcommittees', String),
+                  Column('aiyp_overdose_reversal_reporting', String))
 
 meta.create_all(engine)
 
