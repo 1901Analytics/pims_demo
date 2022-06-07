@@ -156,9 +156,9 @@ if st.session_state.user_purpose == 'Data Entry' and st.session_state.data_choic
             sud_issues = st.selectbox('Any issues with reporting sud data?', reporting_issues)
             dataset['issues_reporting_above_data_sud'] = [sud_issues]
             subcommittees = st.selectbox('Creating subcommittees is included in your program.', ['False', 'True'])
-            dataset['aiyp_creating_subcommittees'] = bool(subcommittees)
+            dataset['aiyp_creating_subcommittees'] = [subcommittees]
             reversal_reporting = st.selectbox('Overdose reversal reporting is included in your program.', ['False', 'True'])
-            dataset['aiyp_overdose_reversal_reporting'] = bool(reversal_reporting)
+            dataset['aiyp_overdose_reversal_reporting'] = [reversal_reporting]
 
         data_entry_form_submit = st.form_submit_button(label = 'Please confirm your data looks correct before clicking to update. '
                                                                'This submission is final and cannot be undone. Please only click once per submission.')
