@@ -8,7 +8,6 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 from pims_database import *
 
-
 st.set_page_config(layout="wide")
 
 # Hide menu and streamlit footer
@@ -23,10 +22,8 @@ st.markdown(hide_menu_style, unsafe_allow_html = True)
 # Initialize path - later change to AWS directory
 # file_path = '/Volumes/Stark 1TB/MTSU_DSI/DataManagementDemo/'
 
-image = Image.open('DSI.jpeg')
-st.image(image, width = 500)
-
-
+#image = Image.open('DSI.jpeg')
+#st.image(image, width = 500)
 
 # creates the sql alchemy engine to query a database
 engine = return_engine()
@@ -98,6 +95,12 @@ if st.session_state.login_success:
 
     dataframe = st.selectbox('Select your data', ['', 'service area and consortium', 'prevalence', 'activities'])
     st.session_state.data_choice = dataframe
+    if st.session_state.data_choice == 'service area and consortium':
+        st.session_state.database_choice = 'pims_service_area_and_consortium'
+    elif st.session_state.data_choice == 'prevalence':
+        st.session_state.database_choice = 'pims_prevalence'
+    else:
+        st.session_state.database_choice = 'pims_activities'
     st.session_state.user_purpose = st.selectbox('Section', ['', 'Data Entry', 'Data Analysis', 'Data Retrieval'])
 
 if st.session_state.user_role == 'Employee':
@@ -113,6 +116,12 @@ if st.session_state.user_role == 'Employee':
 
     dataframe = st.selectbox('Select your data for data entry as an Employee', ['', 'service area and consortium', 'prevalence', 'activities'])
     st.session_state.data_choice = dataframe
+    if st.session_state.data_choice == 'service area and consortium':
+        st.session_state.database_choice = 'pims_service_area_and_consortium'
+    elif st.session_state.data_choice == 'prevalence':
+        st.session_state.database_choice = 'pims_prevalence'
+    else:
+        st.session_state.database_choice = 'pims_activities'
 
 # Data entry section available to all users (employee and admin)
 if st.session_state.user_purpose == 'Data Entry' and st.session_state.data_choice != '':
@@ -134,7 +143,6 @@ if st.session_state.user_purpose == 'Data Entry' and st.session_state.data_choic
             dataset['moa_hospitals_critical_access'] = [hospital_cah]
             emergency = st.slider('Number of emergency medical services', 0, 100, 0)
             dataset['emergency_medical_services'] = [emergency]
-
 
         if st.session_state.data_choice == 'prevalence':
             non_fatal = st.slider('Number of non fatal opioid overdoses:', 0, 100, 0)
@@ -171,17 +179,6 @@ if st.session_state.user_purpose == 'Data Entry' and st.session_state.data_choic
         st.write('This is a preview of the data you have just entered')
         st.table(dataset)
 
-        # Read in master (database) file with observations
-        #master_data = st.session_state.data_choice
-
-        # quick if/loop to move from prevalence to database table name pims_prevalence
-        if st.session_state.data_choice == 'service area and consortium':
-            st.session_state.database_choice = 'pims_service_area_and_consortium'
-        elif st.session_state.data_choice == 'prevalence':
-            st.session_state.database_choice = 'pims_prevalence'
-        else:
-            st.session_state.database_choice = 'pims_activities'
-
         master_data = get_data(engine, st.session_state.database_choice)
         st.write(master_data)
         # Append new entry to dataset
@@ -194,14 +191,10 @@ if st.session_state.user_purpose == 'Data Entry' and st.session_state.data_choic
         # Create session_state variable for the full data that allows for subsequent analysis and exporting to personal
         st.session_state.data_master = master_data
 
-
         ### AFTER SUBMITTING ONE DATASET, ASK THE USER IF THEY WANT TO WORK ON ANOTHER.
-
-
 
 if st.session_state.user_purpose == 'Data Analysis' and st.session_state.login_success:
     st.write('Welcome to the Data Analysis Page for the ' + st.session_state.data_choice + ' dataset.')
-    #st.session_state.data_retrieval_selection = pd.read_csv(st.session_state.data_choice + '_master.csv')
     st.session_state.data_retrieval_selection = get_data(engine, st.session_state.database_choice)
 
     st.write('Here is an overview of the numerical variables within the ', st.session_state.data_choice, ' dataframe')
@@ -369,4 +362,3 @@ if st.session_state.user_purpose == 'Data Retrieval' and st.session_state.login_
 
     download_data_button = st.download_button('Press to save the updated file to your computer', df_xlsx,
                        str(st.session_state.database_choice) + '_master_' + str(today) + '.xlsx')
-
