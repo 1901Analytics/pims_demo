@@ -27,7 +27,6 @@ engine = return_engine()
 
 # Data Entry, Analysis, and Retrieval
 st.title('Data Entry Analysis and Retrieval (DEAR) Platform: PIMS Demo')
-st.write('Created by the MTSU Data Science Institute')
 
 # Initialize first Session State for Role
 if 'user_role' not in st.session_state:
