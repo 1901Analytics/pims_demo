@@ -19,11 +19,8 @@ hide_menu_style = """
     """
 st.markdown(hide_menu_style, unsafe_allow_html = True)
 
-# Initialize path - later change to AWS directory
-# file_path = '/Volumes/Stark 1TB/MTSU_DSI/DataManagementDemo/'
-
-#image = Image.open('DSI.jpeg')
-#st.image(image, width = 500)
+image = Image.open('DSI.jpeg')
+st.image(image, width = 500)
 
 # creates the sql alchemy engine to query a database
 engine = return_engine()
